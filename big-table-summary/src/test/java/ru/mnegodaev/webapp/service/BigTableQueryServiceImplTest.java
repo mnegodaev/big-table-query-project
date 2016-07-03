@@ -18,7 +18,7 @@ import java.util.List;
 public class BigTableQueryServiceImplTest {
 
     @Autowired
-    BigTableQueryService service;
+    private BigTableQueryService service;
 
     @Test
     public void testSubmitInParallel() {

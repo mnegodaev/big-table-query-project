@@ -8,7 +8,7 @@
     <artifactId>big-table-query</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>Executing a big table fullscan parallel query</name>
+    <name>parallelized big table fullscan query</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
