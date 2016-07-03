@@ -7,6 +7,7 @@ Usage
 -------------
 
 public class MyClass {
+
     private static final int dop = 4;
 
     @Autowired
