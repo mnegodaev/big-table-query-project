@@ -22,7 +22,7 @@ public class BigTableQueryServiceImplTest {
 
     @Test
     public void testSubmitInParallel() {
-        service.performQueryForInterval(1L, 100000L);
+        service.performQueryForInterval(1L, 100000L); // первый запрос для разогрева БД
 
         List<Long> summary1 = service.performQueryInParallel(1);
         List<Long> summary2 = service.performQueryInParallel(4);

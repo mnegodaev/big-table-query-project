@@ -19,7 +19,6 @@
         <postgre.version>9.4.1208</postgre.version>
         <hibernate.version>5.2.0.Final</hibernate.version>
         <jackson.version>2.7.5</jackson.version>
-        <jetty.version>9.3.0.M1</jetty.version>
     </properties>
 
     <dependencies>
@@ -107,30 +106,10 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
-        <!-- Embedded Jetty server -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-server</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
-        <!-- Web Application Context Handler -->
-        <dependency>
-            <groupId>org.eclipse.jetty</groupId>
-            <artifactId>jetty-webapp</artifactId>
-            <version>${jetty.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <path>/</path>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -146,6 +125,7 @@
                 <version>2.1.1</version>
                 <configuration>
                     <warName>btq-1.0-SNAPSHOT</warName>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
             <plugin>

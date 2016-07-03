@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 public class BigTableQueryServiceImpl implements BigTableQueryService {
 
     private static final Logger logger = LoggerFactory.getLogger(BigTableQueryServiceImpl.class);
+    private static final String SELECT_MIN_ID_QUERY = "SELECT MIN (id) FROM big_table";
+    private static final String SELECT_MAX_ID_QUERY = "SELECT MAX (id) FROM big_table";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -30,8 +32,8 @@ public class BigTableQueryServiceImpl implements BigTableQueryService {
     @Override
     public List<Long> performQueryInParallel(int dop) {
         long startTime = System.currentTimeMillis();
-        Long firstId = jdbcTemplate.queryForObject("SELECT MIN (id) FROM big_table", Long.class);
-        Long lastId = jdbcTemplate.queryForObject("SELECT MAX (id) FROM big_table", Long.class);
+        Long firstId = jdbcTemplate.queryForObject(SELECT_MIN_ID_QUERY, Long.class);
+        Long lastId = jdbcTemplate.queryForObject(SELECT_MAX_ID_QUERY, Long.class);
         Long interval = ((lastId - firstId) / dop);
 
         List<QueryRunner> runners = new ArrayList<>(dop);
@@ -62,11 +64,16 @@ public class BigTableQueryServiceImpl implements BigTableQueryService {
     private List<Long> buildTotalSummary(List<QueryRunner> runners) {
         List<Long> totalSummary = null;
         for (QueryRunner runner : runners) {
+            if (runner.getQueryResult() == null) {
+                continue;
+            }
+
             if (totalSummary == null) {
                 totalSummary = runner.getQueryResult();
             } else {
                 for (int i = 0; i < totalSummary.size(); i++) {
-                    totalSummary.set(i, totalSummary.get(i) + runner.getQueryResult().get(i));
+                    Long sum = totalSummary.get(i) + runner.getQueryResult().get(i);
+                    totalSummary.set(i, sum);
                 }
             }
         }

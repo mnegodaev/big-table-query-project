@@ -15,6 +15,6 @@ public class MyClass {
 
     @Test
     public void testSubmitInParallel() {
-        List<Long> queryResponce = service.performQueryInParallel(dop);
+        List<Long> queryResponse = service.performQueryInParallel(dop);
     }
 }
